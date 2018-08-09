@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import requireAuth from "components/Hoc/requireAuth";
-import * as actions from "actions";
+import requireAuth from './Hoc/requireAuth';
+import * as actions from '../actions';
 
 class CommentBox extends Component {
   constructor(props) {
@@ -10,46 +11,63 @@ class CommentBox extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSumbit = this.handleSumbit.bind(this);
+
+    this.state = {
+      comment: '',
+    };
   }
-  state = {
-    comment: ""
-  };
 
   handleChange(e) {
     this.setState({
-      comment: e.target.value
+      comment: e.target.value,
     });
   }
 
   handleSumbit(e) {
     e.preventDefault();
 
-    this.props.saveComment(this.state.comment);
+    const { comment } = this.state;
+    const { saveComment } = this.props;
+
+    saveComment(comment);
 
     this.setState({
-      comment: ""
+      comment: '',
     });
   }
 
   render() {
+    const { comment } = this.state;
+    const { fetchComments } = this.props;
     return (
       <Fragment>
         <form onSubmit={this.handleSumbit}>
-          <h4>Add a comment</h4>
-          <textarea onChange={this.handleChange} value={this.state.comment} />
+          <h4>
+Add a comment
+          </h4>
+          <textarea onChange={this.handleChange} value={comment} />
           <div>
-            <button>Sumbit comment</button>
+            <button type="button">
+Sumbit comment
+            </button>
           </div>
         </form>
-        <button className="fetch-comments" onClick={this.props.fetchComments}>
-          Fetch comments
-        </button>
+        {/* eslint-disable */}
+				<button type="button" className="fetch-comments" onClick={fetchComments}>
+					Fetch comments
+				</button>
+				{/* eslint-enable */}
       </Fragment>
     );
   }
 }
 
+CommentBox.propTypes = {
+  fetchComments: PropTypes.func.isRequired,
+  saveComment: PropTypes.func.isRequired,
+};
+
 export default connect(
   null,
-  actions
+  actions,
 )(requireAuth(CommentBox));

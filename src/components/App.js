@@ -1,22 +1,25 @@
-import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
-import { connect } from "react-redux";
-import CommentBox from "components/CommentBox";
-import CommentList from "components/CommentList";
-import Analytics from 'components/Google/Analytics'
-import * as actions from "actions";
+import React, { Component, Fragment } from 'react';
+import { Route, Link, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import CommentList from './CommentList';
+import CommentBox from './CommentBox';
+import { Analytics } from './Google/Analytics';
+import { NotFound } from './NotFound';
+import * as actions from '../actions';
 
 class App extends Component {
   renderButton() {
     let msg;
-    if (this.props.auth) {
-      msg = "Sign Out";
+    const { auth, changeAuth } = this.props;
+    if (auth) {
+      msg = 'Sign Out';
     } else {
-      msg = "Sign In";
+      msg = 'Sign In';
     }
 
     return (
-      <button onClick={() => this.props.changeAuth(!this.props.auth)}>
+      <button type="button" onClick={() => changeAuth(!auth)}>
         {msg}
       </button>
     );
@@ -26,38 +29,56 @@ class App extends Component {
     return (
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">
+Home
+          </Link>
         </li>
         <li>
-          <Link to="/post">Post</Link>
+          <Link to="/post">
+Post
+          </Link>
         </li>
         <li>
-          <Link to="/analytics">Analytics</Link>
+          <Link to="/analytics">
+Analytics
+          </Link>
         </li>
-        <li>{this.renderButton()}</li>
+        <li>
+          {this.renderButton()}
+        </li>
       </ul>
     );
   }
 
   render() {
     return (
-      <div>
-        {this.renderHeader()}
-        <Route path="/analytics" component={Analytics} />
-        <Route path="/post" component={CommentBox} />
-        <Route path="/" exact component={CommentList} />
-      </div>
+      <Fragment>
+        <Fragment>
+          {this.renderHeader()}
+          <Switch>
+            <Route path="/analytics" component={Analytics} />
+            <Route path="/post" component={CommentBox} />
+            <Route path="/" exact component={CommentList} />
+            <Route component={NotFound} />
+          </Switch>
+        </Fragment>
+      </Fragment>
     );
   }
 }
 
+App.propTypes = {
+  auth: PropTypes.bool.isRequired,
+  changeAuth: PropTypes.func.isRequired,
+};
+
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 }
 
 export default connect(
   mapStateToProps,
-  actions
+  actions,
 )(App);
