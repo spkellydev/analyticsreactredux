@@ -3,9 +3,14 @@ import { mount } from "enzyme";
 import moxios from "moxios";
 
 import Root from "Root";
-import App from "components/App";
-
+import CommentList from "components/CommentList";
+import CommentBox from "components/CommentBox";
+let initialState;
 beforeEach(() => {
+  initialState = {
+    auth: true
+  };
+
   moxios.install();
   moxios.stubRequest("http://jsonplaceholder.typicode.com/comments", {
     status: 200,
@@ -28,12 +33,17 @@ it("can fetch a list of commets and display them", done => {
   // attempt to render the entire app
   const wrapped = mount(
     <Root>
-      <App />
+      <CommentList />
+    </Root>
+  );
+  const commentBox = mount(
+    <Root initialState={initialState}>
+      <CommentBox />
     </Root>
   );
 
   // find the 'fetchComments' button and click it
-  wrapped.find(".fetch-comments").simulate("click");
+  commentBox.find(".fetch-comments").simulate("click");
   moxios.wait(function() {
     wrapped.update();
     // expect to find a list of comments
@@ -42,4 +52,5 @@ it("can fetch a list of commets and display them", done => {
 
   done();
   wrapped.unmount();
+  commentBox.unmount();
 });

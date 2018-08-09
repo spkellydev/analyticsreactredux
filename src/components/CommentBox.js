@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+
+import requireAuth from "components/Hoc/requireAuth";
 import * as actions from "actions";
 
 class CommentBox extends Component {
@@ -50,4 +52,4 @@ class CommentBox extends Component {
 export default connect(
   null,
   actions
-)(CommentBox);
+)(requireAuth(CommentBox));

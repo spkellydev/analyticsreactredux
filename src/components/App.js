@@ -6,9 +6,6 @@ import CommentList from "components/CommentList";
 import * as actions from "actions";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
   renderButton() {
     let msg;
     if (this.props.auth) {

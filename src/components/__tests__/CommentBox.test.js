@@ -4,10 +4,12 @@ import Root from "Root";
 import CommentBox from "components/CommentBox";
 
 let wrapped;
+let initialState;
 
 beforeEach(() => {
+  initialState = { auth: true };
   wrapped = mount(
-    <Root>
+    <Root initialState={initialState}>
       <CommentBox />
     </Root>
   );
