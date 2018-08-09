@@ -9,12 +9,21 @@ app.use(express.static(path.join(__dirname, "../public"))); //serves the index.h
 /**
  * Named routes for Express must be declared before the React application
  */
+
 app.get('/ga', (req, res) => {
     const getData = require('./lib/analytics')
 
-    getData().then((ga) => {
-        res.json(ga.data)
-    })
+    // if (gaData) {
+    //     let response = gaData
+    //     console.log('cached response')
+    //     res.json(response.data)
+    // } else {
+        console.log('request')
+        getData().then((ga) => {
+            gaData = ga
+            res.json(ga.data)
+        })
+    // }
 })
 
 /**

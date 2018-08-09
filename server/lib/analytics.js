@@ -11,7 +11,7 @@ getData = async () => {
         'ids': 'ga:178297180',
         'start-date': '30daysAgo',
         'end-date': 'today',
-        'metrics': 'ga:hits',
+        'metrics': 'ga:hits,ga:sessions',
         'dimensions': 'ga:date'
     })
 }
