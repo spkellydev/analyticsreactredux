@@ -5,6 +5,7 @@ import moxios from "moxios";
 import Root from "Root";
 import CommentList from "components/CommentList";
 import CommentBox from "components/CommentBox";
+
 let initialState;
 beforeEach(() => {
   initialState = {
