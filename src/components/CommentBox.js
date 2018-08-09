@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import requireAuth from './Hoc/requireAuth';
-import * as actions from '../actions';
+import requireAuth from "./Hoc/requireAuth";
+import * as actions from "../actions";
 
 class CommentBox extends Component {
   constructor(props) {
@@ -13,13 +13,13 @@ class CommentBox extends Component {
     this.handleSumbit = this.handleSumbit.bind(this);
 
     this.state = {
-      comment: '',
+      comment: ""
     };
   }
 
   handleChange(e) {
     this.setState({
-      comment: e.target.value,
+      comment: e.target.value
     });
   }
 
@@ -32,7 +32,7 @@ class CommentBox extends Component {
     saveComment(comment);
 
     this.setState({
-      comment: '',
+      comment: ""
     });
   }
 
@@ -42,21 +42,21 @@ class CommentBox extends Component {
     return (
       <Fragment>
         <form onSubmit={this.handleSumbit}>
-          <h4>
-Add a comment
-          </h4>
+          <h4>Add a comment</h4>
           <textarea onChange={this.handleChange} value={comment} />
           <div>
-            <button type="button">
-Sumbit comment
-            </button>
+            <button type="button">Sumbit comment</button>
           </div>
         </form>
         {/* eslint-disable */}
-				<button type="button" className="fetch-comments" onClick={fetchComments}>
-					Fetch comments
-				</button>
-				{/* eslint-enable */}
+        <button
+          type="button"
+          className="fetch-comments"
+          onClick={fetchComments}
+        >
+          Fetch comments
+        </button>
+        {/* eslint-enable */}
       </Fragment>
     );
   }
@@ -64,10 +64,10 @@ Sumbit comment
 
 CommentBox.propTypes = {
   fetchComments: PropTypes.func.isRequired,
-  saveComment: PropTypes.func.isRequired,
+  saveComment: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
-  actions,
+  actions
 )(requireAuth(CommentBox));

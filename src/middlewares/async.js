@@ -1,6 +1,6 @@
 export default ({ dispatch }) => next => action => {
   // Check to see if the action contains a promise on payload
-  if (!action.payload || !action.payload.load) {
+  if (!action.payload || !action.payload.then) {
     return next(action); //bail out
   }
 
