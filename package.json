@@ -2,6 +2,7 @@
   "name": "testing",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "axios": "^0.18.0",
     "googleapis": "^32.0.0",
@@ -15,14 +16,17 @@
     "redux-promise": "^0.6.0"
   },
   "scripts": {
-    "start": "react-scripts build && nodemon server/",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn start\"",
+    "start": "react-scripts start --no-open",
     "build": "react-scripts build",
+    "server": "nodemon server/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "concurrently": "^3.6.1",
     "enzyme": "^3.4.1",
     "enzyme-adapter-react-16": "^1.2.0",
     "mocha": "^5.2.0",
