@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "googleapis": "^32.0.0",
+    "q": "^1.5.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
@@ -13,14 +15,17 @@
     "redux-promise": "^0.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts build && nodemon server/",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
     "enzyme": "^3.4.1",
     "enzyme-adapter-react-16": "^1.2.0",
+    "mocha": "^5.2.0",
     "moxios": "^0.4.0"
   }
 }

@@ -3,6 +3,7 @@ import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import CommentBox from "components/CommentBox";
 import CommentList from "components/CommentList";
+import Analytics from 'components/Google/Analytics'
 import * as actions from "actions";
 
 class App extends Component {
@@ -30,6 +31,9 @@ class App extends Component {
         <li>
           <Link to="/post">Post</Link>
         </li>
+        <li>
+          <Link to="/analytics">Analytics</Link>
+        </li>
         <li>{this.renderButton()}</li>
       </ul>
     );
@@ -39,6 +43,7 @@ class App extends Component {
     return (
       <div>
         {this.renderHeader()}
+        <Route path="/analytics" component={Analytics} />
         <Route path="/post" component={CommentBox} />
         <Route path="/" exact component={CommentList} />
       </div>
