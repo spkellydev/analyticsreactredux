@@ -4,7 +4,7 @@ const path = require("path");
 
 const SERVICE_ACCOUNT_EMAIL =
   "reactanalytics@celtic-current-212815.iam.gserviceaccount.com";
-const SERVICE_ACCOUNT_KEY = path.resolve(__dirname, "../key_cert.pem");
+const SERVICE_ACCOUNT_KEY = path.resolve(__dirname, "../lib/key_cert.pem");
 const authClient = new google.auth.JWT(
   SERVICE_ACCOUNT_EMAIL,
   SERVICE_ACCOUNT_KEY,
