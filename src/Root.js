@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
+import reduxThunk from "redux-thunk";
 import asyncRedux from "./middlewares/async";
 import stateValidator from "./middlewares/stateValidator";
 import PropTypes from "prop-types";
@@ -11,7 +12,7 @@ const Root = ({ children, initialState = {} }) => {
   const store = createStore(
     reducers,
     initialState,
-    applyMiddleware(asyncRedux, stateValidator)
+    applyMiddleware(asyncRedux, stateValidator, reduxThunk)
   );
   return <Provider store={store}>{children}</Provider>;
 };

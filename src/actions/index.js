@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SAVE_COMMENT, FETCH_COMMENTS, CHANGE_AUTH } from "./types";
+import { SAVE_COMMENT, FETCH_COMMENTS, CHANGE_AUTH, AUTH_USER } from "./types";
 
 // save comment action to post
 export function saveComment(comment) {
@@ -30,3 +30,10 @@ export function changeAuth(loginState) {
     payload: loginState
   };
 }
+
+export const signUp = ({ email, password }) => dispatch => {
+  axios.post("http://localhost:5000/signup", {
+    email,
+    password
+  });
+};

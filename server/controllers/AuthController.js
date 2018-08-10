@@ -23,7 +23,7 @@ exports.signup = function(req, res, next) {
 
   if (!email || !password) {
     // unprocessable entity
-    res.status(422).send({
+    return res.status(422).send({
       error: "Minimum requirements not met."
     });
   }

@@ -6,8 +6,9 @@ import CommentBox from "./CommentBox";
 import Header from "./pageParts/Header";
 import Welcome from "./pages/Welcome";
 import { Analytics } from "./Google/Analytics";
-import { NotFound } from "./NotFound";
+import { NotFound } from "./pages/NotFound";
 import * as actions from "../actions";
+import SignUp from "./auth/SignUp";
 
 class App extends Component {
   renderButton() {
@@ -49,6 +50,7 @@ class App extends Component {
         <Header />
         <Switch>
           <Route path="/analytics" component={Analytics} />
+          <Route path="/signup" component={SignUp} />
           <Route path="/post" component={CommentBox} />
           <Route path="/" exact component={Welcome} />
           <Route component={NotFound} />
@@ -59,7 +61,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  auth: PropTypes.bool.isRequired,
+  auth: PropTypes.objectOf(PropTypes.string).isRequired,
   changeAuth: PropTypes.func.isRequired
 };
 

@@ -11,5 +11,6 @@ export default ({ dispatch, getState }) => next => action => {
 
   if (!tv4.validate(getState(), commentValidationSchema)) {
     console.warn("Invalid comment state schema detected");
+    console.log(tv4.validate(getState(), commentValidationSchema));
   }
 };

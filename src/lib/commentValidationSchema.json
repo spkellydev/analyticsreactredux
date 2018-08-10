@@ -12,15 +12,28 @@
         "type": "string",
         "title": "The 0th Schema ",
         "default": "",
-        "examples": ["Comment 1", "Comment 2"]
+        "examples": ["string", "string"]
       }
     },
     "auth": {
       "$id": "/properties/auth",
-      "type": "boolean",
-      "title": "The Auth Schema ",
-      "default": false,
-      "examples": [true]
+      "type": "object",
+      "properties": {
+        "authenticated": {
+          "$id": "/properties/auth/properties/authenticated",
+          "type": "string",
+          "title": "The Authenticated Schema ",
+          "default": "",
+          "examples": [""]
+        },
+        "errorMessage": {
+          "$id": "/properties/auth/properties/errorMessage",
+          "type": "string",
+          "title": "The Errormessage Schema ",
+          "default": "",
+          "examples": [""]
+        }
+      }
     }
   }
 }

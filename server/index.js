@@ -15,6 +15,16 @@ mongoose.connect(
 /**
  * Middlewares
  */
+// cors
+app.use(function(request, response, next) {
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Rquested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 // static middleware to serve the index.html
 app.use(express.static(path.join(__dirname, "../public")));
 // request logger middleware
@@ -27,15 +37,6 @@ const getData = require("./lib/analytics");
 const commentRouter = require("./routes/comments");
 
 commentRouter(app);
-
-app.use(function(request, response, next) {
-  response.header("Access-Control-Allow-Origin", "*");
-  response.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Rquested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 /**
  * Named routes for Express must be declared before the React application
