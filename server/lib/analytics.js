@@ -12,16 +12,16 @@ const authClient = new google.auth.JWT(
   ["https://www.googleapis.com/auth/analytics.readonly"]
 );
 
-const getData = async () => {
+const getData = async options => {
   try {
     await authClient.authorize();
 
     return google.analytics("v3").data.ga.get({
       auth: authClient,
       ids: "ga:178297180",
-      "start-date": "30daysAgo",
-      "end-date": "today",
-      metrics: "ga:hits,ga:sessions",
+      "start-date": options.date.start,
+      "end-date": options.date.end,
+      metrics: options.metrics.join(),
       dimensions: "ga:date"
     });
   } catch (err) {

@@ -7,10 +7,10 @@ class Header extends Component {
     if (this.props.authenticated) {
       return (
         <Fragment>
-          <li>
+          <li className="nav-item">
             <Link to="/signout">Sign Out</Link>
           </li>
-          <li>
+          <li className="nav-item">
             <Link to="/analytics">Analytics</Link>
           </li>
         </Fragment>
@@ -18,10 +18,10 @@ class Header extends Component {
     } else {
       return (
         <Fragment>
-          <li>
+          <li className="nav-item">
             <Link to="/signup">Sign Up</Link>
           </li>
-          <li>
+          <li className="nav-item">
             <Link to="/signin">Sign In</Link>
           </li>
         </Fragment>
@@ -31,13 +31,18 @@ class Header extends Component {
 
   render() {
     return (
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          {this.renderLink()}
-        </ul>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <button type="button" className="navbar-toggler">
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link to="/">Home</Link>
+            </li>
+            {this.renderLink()}
+          </ul>
+        </div>
       </nav>
     );
   }

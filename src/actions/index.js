@@ -1,5 +1,12 @@
 import axios from "axios";
-import { SAVE_COMMENT, FETCH_COMMENTS, AUTH_USER, AUTH_ERROR } from "./types";
+import {
+  SAVE_COMMENT,
+  FETCH_COMMENTS,
+  AUTH_USER,
+  AUTH_ERROR,
+  GET_GA_DATA,
+  ERROR
+} from "./types";
 
 // save comment action to post
 export function saveComment(comment) {
@@ -64,5 +71,17 @@ export const signIn = ({ email, password }, callback) => async dispatch => {
     callback();
   } catch (err) {
     dispatch({ type: AUTH_ERROR, payload: "Invalid login creditientials" });
+  }
+};
+
+export const getAnalyticsData = options => async dispatch => {
+  try {
+    const ga = await axios.post("http://localhost:5000/ga", {
+      options
+    });
+
+    dispatch({ type: GET_GA_DATA, payload: ga.data });
+  } catch (err) {
+    dispatch({ type: ERROR, payload: "Error receiving analytics data" });
   }
 };

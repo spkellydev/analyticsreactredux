@@ -42,9 +42,10 @@ commentRouter(app);
  * Named routes for Express must be declared before the React application
  */
 
-app.get("/ga", (req, res) => {
+app.post("/ga", (req, res) => {
+  const options = req.body.options;
   // TODO -- implement caching strategy
-  getData().then(ga => {
+  getData(options).then(ga => {
     res.json(ga.data);
   });
 });
