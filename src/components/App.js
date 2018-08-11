@@ -5,51 +5,22 @@ import PropTypes from "prop-types";
 import CommentBox from "./CommentBox";
 import Header from "./pageParts/Header";
 import Welcome from "./pages/Welcome";
-import { Analytics } from "./Google/Analytics";
+import Analytics from "./Google/Analytics";
 import { NotFound } from "./pages/NotFound";
 import * as actions from "../actions";
 import SignUp from "./auth/SignUp";
+import SignIn from "./auth/SignIn";
+import SignOut from "./auth/SignOut";
 
 class App extends Component {
-  renderButton() {
-    let msg;
-    const { auth, changeAuth } = this.props;
-    if (auth) {
-      msg = "Sign Out";
-    } else {
-      msg = "Sign In";
-    }
-
-    return (
-      <button type="button" onClick={() => changeAuth(!auth)}>
-        {msg}
-      </button>
-    );
-  }
-
-  renderHeader() {
-    return (
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/post">Post</Link>
-        </li>
-        <li>
-          <Link to="/analytics">Analytics</Link>
-        </li>
-        <li>{this.renderButton()}</li>
-      </ul>
-    );
-  }
-
   render() {
     return (
       <Fragment>
         <Header />
         <Switch>
           <Route path="/analytics" component={Analytics} />
+          <Route path="/signout" component={SignOut} />
+          <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/post" component={CommentBox} />
           <Route path="/" exact component={Welcome} />
@@ -61,8 +32,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  auth: PropTypes.objectOf(PropTypes.string).isRequired,
-  changeAuth: PropTypes.func.isRequired
+  auth: PropTypes.objectOf(PropTypes.string).isRequired
 };
 
 function mapStateToProps(state) {

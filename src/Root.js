@@ -8,7 +8,12 @@ import PropTypes from "prop-types";
 
 import reducers from "./reducers";
 
-const Root = ({ children, initialState = {} }) => {
+const Root = ({
+  children,
+  initialState = {
+    auth: { authenticated: localStorage.getItem("token") }
+  }
+}) => {
   const store = createStore(
     reducers,
     initialState,

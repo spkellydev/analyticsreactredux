@@ -3,6 +3,7 @@ import axios from "axios";
 import { Line as LineChart } from "react-chartjs-2";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
+import requireAuth from "../Hoc/requireAuth";
 
 class Analytics extends Component {
   constructor() {
@@ -39,14 +40,18 @@ class Analytics extends Component {
   }
 
   componentDidMount() {
-    try {
-      this.getData().then(data => {
-        this.setState({
-          chartData: data
+    // auth check to ensure no memory lead=k
+    // ~.../react/warning.js:33
+    if (this.props.auth) {
+      try {
+        this.getData().then(data => {
+          this.setState({
+            chartData: data
+          });
         });
-      });
-    } catch (err) {
-      console.log(err);
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
@@ -65,15 +70,17 @@ class Analytics extends Component {
     return (
       <Fragment>
         <h4>Analytics View</h4>
-        <LineChart data={chartData} options={this.chartOptions} />
+        <LineChart height="600" data={chartData} options={this.chartOptions} />
       </Fragment>
     );
   }
 }
 
-export { Analytics };
+function mapStateToProps(state) {
+  auth: state.auth.authenenticated;
+}
 
 export default connect(
   null,
   actions
-)(Analytics);
+)(requireAuth(Analytics));
