@@ -40,9 +40,10 @@ class Analytics extends Component {
   }
 
   componentDidMount() {
-    // auth check to ensure no memory lead=k
+    // auth check to ensure no memory lead
     // ~.../react/warning.js:33
-    if (this.props.auth) {
+    const { auth } = this.props;
+    if (auth) {
       try {
         this.getData().then(data => {
           this.setState({
@@ -70,7 +71,13 @@ class Analytics extends Component {
     return (
       <Fragment>
         <h4>Analytics View</h4>
-        <LineChart height="600" data={chartData} options={this.chartOptions} />
+        <div className="container">
+          <LineChart
+            height={600}
+            data={chartData}
+            options={this.chartOptions}
+          />
+        </div>
       </Fragment>
     );
   }
@@ -81,6 +88,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   actions
 )(requireAuth(Analytics));

@@ -15,17 +15,18 @@ const authClient = new google.auth.JWT(
 const getData = async () => {
   try {
     await authClient.authorize();
+
+    return google.analytics("v3").data.ga.get({
+      auth: authClient,
+      ids: "ga:178297180",
+      "start-date": "30daysAgo",
+      "end-date": "today",
+      metrics: "ga:hits,ga:sessions",
+      dimensions: "ga:date"
+    });
   } catch (err) {
-    console.log(err);
+    return;
   }
-  return google.analytics("v3").data.ga.get({
-    auth: authClient,
-    ids: "ga:178297180",
-    "start-date": "30daysAgo",
-    "end-date": "today",
-    metrics: "ga:hits,ga:sessions",
-    dimensions: "ga:date"
-  });
 };
 
 module.exports = getData;

@@ -16,12 +16,16 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
     if (!user) done(null, false);
 
     // compare password, UserSchema method
-    user.comparePassword(password, user.password, (err, isMatch) => {
-      if (err) done(err);
-      if (!isMatch) done(null, false);
+    try {
+      user.comparePassword(password, user.password, (err, isMatch) => {
+        if (err) done(err);
+        if (!isMatch) done(null, false);
 
-      return done(null, user);
-    });
+        return done(null, user);
+      });
+    } catch (err) {
+      done(err, false);
+    }
   });
 });
 
