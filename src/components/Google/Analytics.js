@@ -71,7 +71,13 @@ class Analytics extends Component {
     return (
       <Fragment>
         <h4>Analytics View</h4>
-        <LineChart height="600" data={chartData} options={this.chartOptions} />
+        <div className="container">
+          <LineChart
+            height={600}
+            data={chartData}
+            options={this.chartOptions}
+          />
+        </div>
       </Fragment>
     );
   }
