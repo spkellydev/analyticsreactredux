@@ -148,7 +148,7 @@ class Analytics extends Component {
                     className="form-control"
                   />
                 </div>
-                <input type="submit" />
+                <input className="btn btn-dark" type="submit" />
               </form>
             </div>
             <div style={{ position: "relative" }} className="col-9">
