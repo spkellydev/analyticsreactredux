@@ -39,7 +39,7 @@ class Welcome extends React.Component {
           localStorage.setItem("token", token.token);
           this.pushRouter();
         });
-      }, 3000);
+      }, 5000);
     });
   };
 

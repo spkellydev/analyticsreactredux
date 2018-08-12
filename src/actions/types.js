@@ -7,3 +7,4 @@ export const AUTH_USER = "auth_user";
 export const AUTH_ERROR = "auth_error";
 
 export const GET_GA_DATA = "get_ga_data";
+export const GET_GA_USER = "get_ga_user";

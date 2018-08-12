@@ -10,6 +10,8 @@ exports.decodeUser = async token => {
 
   decoded = JSON.parse(decoded);
 
+  console.log(decoded);
+
   let user = await AuthController.findOne({ id: decoded.sub });
   console.log(user);
   return user;

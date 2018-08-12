@@ -72,7 +72,7 @@ const token = (code, cb) => {
 
           const properties = data.items.map(item => {
             return {
-              id: item.id,
+              id: item.webProperties[0].profiles[0].id,
               name: item.name,
               website: item.webProperties[0].websiteUrl
             };
@@ -99,18 +99,25 @@ const token = (code, cb) => {
 
 const getData = async options => {
   try {
-    await authClient.authorize();
-
-    return google.analytics("v3").data.ga.get({
-      auth: authClient,
-      ids: "ga:178297180",
-      "start-date": options.date.start,
-      "end-date": options.date.end,
-      metrics: options.metrics.join(),
-      dimensions: "ga:date"
+    const data = await axios({
+      method: "get",
+      url: `https://www.googleapis.com/analytics/v3/data/ga?ids=ga:${
+        options.property
+      }&end-date=${
+        options.date.end
+      }&metrics=${options.metrics.join()}&start-date=${
+        options.date.start
+      }&start-date=1&dimensions=ga:date`,
+      headers: {
+        Authorization: `Bearer ${options.access}`
+      }
     });
+
+    console.log(data);
+
+    return data;
   } catch (err) {
-    return;
+    console.log(err);
   }
 };
 

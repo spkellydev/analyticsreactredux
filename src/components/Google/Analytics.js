@@ -16,7 +16,10 @@ class Analytics extends Component {
           start: "30daysAgo",
           end: dayjs(new Date()).format("YYYY-MM-DD")
         },
-        metrics: ["ga:hits", "ga:sessions", "ga:users"]
+        metrics: ["ga:hits", "ga:sessions", "ga:users"],
+        user: {},
+        property: "",
+        access: ""
       }
     };
     this.chartData = {
@@ -56,7 +59,14 @@ class Analytics extends Component {
   componentWillReceiveProps(nextProps) {
     this.chartData = { labels: [], datasets: [] };
     try {
+      if (nextProps.google.user) {
+        const user = nextProps.google.user;
+        this.setState({
+          user: user
+        });
+      }
       if (nextProps.google.analytics) {
+        console.log(nextProps.google.analytics);
         const ga = nextProps.google.analytics;
         const metrics = ga.rows[0];
 
@@ -88,13 +98,25 @@ class Analytics extends Component {
         });
       }
     } catch (err) {
-      console.log(err);
+      return;
     }
   }
 
+  renderDropdown = () => {
+    if (this.state.user) {
+      const { user } = this.state;
+      return user.properties.map(site => {
+        return (
+          <option key={site.website} value={site.id}>
+            {site.name}
+          </option>
+        );
+      });
+    }
+  };
+
   datePicked = e => {
     const { name, value } = e.target;
-    console.log(name, value);
     this.setState({
       gaOptions: {
         ...this.state.gaOptions,
@@ -102,6 +124,16 @@ class Analytics extends Component {
           ...this.state.gaOptions.date,
           [name]: value
         }
+      }
+    });
+  };
+
+  handleDropdownChange = e => {
+    this.setState({
+      gaOptions: {
+        ...this.state.gaOptions,
+        property: e.target.value,
+        access: this.state.user.access
       }
     });
   };
@@ -128,6 +160,12 @@ class Analytics extends Component {
           <div className="row">
             <div className="col-3">
               <form onSubmit={this.onSubmit}>
+                <select
+                  onChange={this.handleDropdownChange}
+                  className="form-control"
+                >
+                  {this.renderDropdown()}
+                </select>
                 <div className="form-group">
                   <label>Start Date</label>
                   <input
@@ -137,6 +175,9 @@ class Analytics extends Component {
                     max="3000-12-31"
                     min="1000-01-01"
                     className="form-control"
+                    value={dayjs(new Date())
+                      .subtract(30, "day")
+                      .format("YYYY-MM-DD")}
                   />
                 </div>
                 <div className="form-group">
@@ -147,6 +188,7 @@ class Analytics extends Component {
                     name="end"
                     min="1000-01-01"
                     max={dayjs(new Date()).format("YYYY-MM-DD")}
+                    value={dayjs(new Date()).format("YYYY-MM-DD")}
                     className="form-control"
                   />
                 </div>

@@ -5,6 +5,7 @@ import {
   AUTH_USER,
   AUTH_ERROR,
   GET_GA_DATA,
+  GET_GA_USER,
   ERROR
 } from "./types";
 
@@ -79,7 +80,10 @@ export const getAnalyticsProfile = token => async dispatch => {
     const data = await axios.post("http://localhost:5000/ga/user", {
       token
     });
-    console.log(data);
+
+    console.log(data.data);
+
+    dispatch({ type: GET_GA_USER, payload: data.data });
   } catch (err) {
     console.log(err);
   }
