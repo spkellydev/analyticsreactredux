@@ -56,6 +56,7 @@ class Analytics extends Component {
     }
   }
 
+  // TODO: add more dimsets
   componentWillReceiveProps(nextProps) {
     this.chartData = { labels: [], datasets: [] };
     try {
