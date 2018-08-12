@@ -40,9 +40,10 @@ class Analytics extends Component {
   }
 
   componentDidMount() {
-    // auth check to ensure no memory lead=k
+    // auth check to ensure no memory lead
     // ~.../react/warning.js:33
-    if (this.props.auth) {
+    const { auth } = this.props;
+    if (auth) {
       try {
         this.getData().then(data => {
           this.setState({
@@ -81,6 +82,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   actions
 )(requireAuth(Analytics));
