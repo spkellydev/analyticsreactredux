@@ -75,3 +75,10 @@ exports.oauth = (userdata, cb) => {
     cb({ token: tokenForUser(user) });
   });
 };
+
+exports.findOne = obj => {
+  return User.findById(obj.id, (err, user) => {
+    if (err) next(err);
+    return user;
+  });
+};

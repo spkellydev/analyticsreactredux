@@ -1,11 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Line as LineChart } from "react-chartjs-2";
-import {
-  googleGetAuthResponse,
-  GoogleAPI,
-  GoogleLogin,
-  GoogleLogout
-} from "react-google-oauth";
 import { connect } from "react-redux";
 import dayjs from "dayjs";
 import * as actions from "../../actions";
@@ -15,6 +9,7 @@ class Analytics extends Component {
   constructor() {
     super();
     this.state = {
+      token: localStorage.getItem("token"),
       chartData: {},
       gaOptions: {
         date: {
@@ -52,8 +47,9 @@ class Analytics extends Component {
     // auth check to ensure no memory leak from React Router
     // ~.../react/warning.js:33
     const { auth } = this.props;
-    if (auth.p) {
-      this.props.getAnalyticsData(this.state.gaOptions);
+    if (auth) {
+      this.props.getAnalyticsProfile(this.state.token);
+      // this.props.getAnalyticsData(this.state.gaOptions);
     }
   }
 
@@ -115,14 +111,6 @@ class Analytics extends Component {
     this.props.getAnalyticsData(this.state.gaOptions);
   };
 
-  signInGoogle = anything => {
-    console.log(googleGetAuthResponse());
-  };
-
-  signInGoogleFailure = anything => {
-    console.log(anything);
-  };
-
   getRandomColor() {
     var letters = "0123456789ABCDEF";
     var color = "#";
@@ -139,21 +127,6 @@ class Analytics extends Component {
         <section className="container-fluid">
           <div className="row">
             <div className="col-3">
-              <GoogleAPI
-                scope="https://www.googleapis.com/auth/analytics"
-                clientId="1073870169812-bafkb4lbgja190m4fe7954b6ihpgdgnf.apps.googleusercontent.com"
-                onUpdateSigninStatus={this.signInGoogle}
-                onInitFailure={this.signInGoogleFailure}
-              >
-                <div>
-                  <div>
-                    <GoogleLogin />
-                  </div>
-                  <div>
-                    <GoogleLogout />
-                  </div>
-                </div>
-              </GoogleAPI>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <label>Start Date</label>

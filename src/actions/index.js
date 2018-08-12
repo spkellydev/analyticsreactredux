@@ -74,6 +74,17 @@ export const signIn = ({ email, password }, callback) => async dispatch => {
   }
 };
 
+export const getAnalyticsProfile = token => async dispatch => {
+  try {
+    const data = await axios.post("http://localhost:5000/ga/user", {
+      token
+    });
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getAnalyticsData = options => async dispatch => {
   try {
     const ga = await axios.post("http://localhost:5000/ga", {

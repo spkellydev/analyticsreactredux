@@ -13,6 +13,10 @@ class Welcome extends React.Component {
     this.onOauth = this.onOauth.bind(this);
   }
 
+  pushRouter = () => {
+    this.props.history.push("/analytics");
+  };
+
   onOauth = () => {
     axios.get("/ga/cb").then(response => {
       this.setState({
@@ -28,6 +32,14 @@ class Welcome extends React.Component {
       this.setState({
         message: "Processing..."
       });
+
+      setTimeout(() => {
+        axios.get("/token").then(async response => {
+          let token = await response.data.token;
+          localStorage.setItem("token", token.token);
+          this.pushRouter();
+        });
+      }, 3000);
     });
   };
 

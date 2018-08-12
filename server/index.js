@@ -34,6 +34,7 @@ app.use(bodyParser.json({ type: "*/*" }));
 
 // function to access google analytics -- TODO -- move to external routes
 const { getData, url, token } = require("./lib/analytics");
+const { decodeUser } = require("./lib/jwt");
 const commentRouter = require("./routes/comments");
 
 class User {}
@@ -63,6 +64,12 @@ app.post("/ga", (req, res) => {
 
 app.get("/ga/cb", (req, res) => {
   res.send(url);
+});
+
+app.post("/ga/user", async (req, res) => {
+  let token = req.body.token;
+  const user = await decodeUser(token);
+  res.json(user);
 });
 
 app.get("/oauth", (req, res) => {
