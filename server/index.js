@@ -33,7 +33,7 @@ app.use(morgan("combined"));
 app.use(bodyParser.json({ type: "*/*" }));
 
 // function to access google analytics -- TODO -- move to external routes
-const getData = require("./lib/analytics");
+const { getData, url, token } = require("./lib/analytics");
 const commentRouter = require("./routes/comments");
 
 commentRouter(app);
@@ -47,6 +47,21 @@ app.post("/ga", (req, res) => {
   // TODO -- implement caching strategy
   getData(options).then(ga => {
     res.json(ga.data);
+  });
+});
+
+app.get("/ga/cb", (req, res) => {
+  res.send(url);
+});
+
+app.get("/oauth", (req, res) => {
+  console.log("==================");
+  const code = req.query.code;
+  token(code, status => {
+    console.log(status);
+    res.send(
+      "<script>setTimeout(function() {window.close(); }, 350)</script><h1>Logging you in...</h1>"
+    );
   });
 });
 
