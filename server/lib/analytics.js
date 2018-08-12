@@ -1,5 +1,6 @@
 const { google } = require("googleapis");
 const axios = require("axios");
+const AuthController = require("../controllers/AuthController");
 
 const path = require("path");
 
@@ -66,25 +67,30 @@ const token = (code, cb) => {
         }
       })
         .then(response => {
-          console.log(response.data);
+          console.log(response.data.items);
+          const data = response.data;
+
+          const properties = data.items.map(item => {
+            return {
+              id: item.id,
+              name: item.name,
+              website: item.webProperties[0].websiteUrl
+            };
+          });
+
+          console.log(data.username);
+
+          const userdata = {
+            email: data.username,
+            properties: properties,
+            access: oAuthClient.credentials.credentials.access_token,
+            password: "null"
+          };
+          const items = AuthController.oauth(userdata, token => cb(token));
         })
         .catch(err => {
-          console.log("err");
+          console.log(err);
         });
-      // google
-      //   .analytics("v3")
-      //   .management.accountSummaries.list({ auth: oAuthClient }, function(
-      //     err,
-      //     result
-      //   ) {
-      //     console.log("ERROR=---------------");
-
-      //     console.log(err);
-      //     console.log("RESULT=---------------");
-
-      //     console.log(result);
-      //   });
-      cb("status okay");
     } catch (err) {
       console.log(err);
     }

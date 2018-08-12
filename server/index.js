@@ -36,11 +36,22 @@ app.use(bodyParser.json({ type: "*/*" }));
 const { getData, url, token } = require("./lib/analytics");
 const commentRouter = require("./routes/comments");
 
+class User {}
+User.token = {};
+const user = new User();
+
 commentRouter(app);
 
 /**
  * Named routes for Express must be declared before the React application
  */
+app.get("/token", (req, res) => {
+  if (user.token) {
+    res.json(user);
+  } else {
+    res.json({ error: "Trouble processing token" });
+  }
+});
 
 app.post("/ga", (req, res) => {
   const options = req.body.options;
@@ -55,12 +66,12 @@ app.get("/ga/cb", (req, res) => {
 });
 
 app.get("/oauth", (req, res) => {
-  console.log("==================");
   const code = req.query.code;
-  token(code, status => {
-    console.log(status);
+
+  token(code, token => {
+    user.token = token;
     res.send(
-      "<script>setTimeout(function() {window.close(); }, 350)</script><h1>Logging you in...</h1>"
+      "<script>setTimeout(function() {window.close(); }, 550)</script><h1>Logging you in...</h1>"
     );
   });
 });

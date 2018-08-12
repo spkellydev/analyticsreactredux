@@ -9,10 +9,17 @@ const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    lowercase: true,
-    required: true
+    lowercase: true
   },
-  password: String
+  password: String,
+  access: String,
+  properties: [
+    {
+      id: String,
+      name: String,
+      website: String
+    }
+  ]
 });
 
 // Before the user gets saves, hash the password

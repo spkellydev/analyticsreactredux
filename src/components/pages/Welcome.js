@@ -6,35 +6,33 @@ class Welcome extends React.Component {
   constructor() {
     super();
     this.state = {
-      url: ""
+      url: "",
+      message: "Sign In With Google"
     };
+
+    this.onOauth = this.onOauth.bind(this);
   }
-  componentDidMount() {
+
+  onOauth = () => {
     axios.get("/ga/cb").then(response => {
       this.setState({
         url: response.data
       });
 
-      let w = window.open(
+      window.open(
         response.data,
         "Please Sign In",
         'width="500px,height="500px"'
       );
 
-      window.onmessage = function(e) {
-        w.close();
-        let url = e.data;
-        console.log(url);
-      };
+      this.setState({
+        message: "Processing..."
+      });
     });
-  }
+  };
 
   render() {
-    return (
-      <div>
-        <h1>Welcome Page</h1>
-      </div>
-    );
+    return <button onClick={this.onOauth}>{this.state.message}</button>;
   }
 }
 

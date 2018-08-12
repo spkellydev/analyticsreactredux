@@ -49,3 +49,29 @@ exports.signup = function(req, res, next) {
     res.json({ token: tokenForUser(user) });
   });
 };
+
+exports.oauth = (userdata, cb) => {
+  const email = userdata.email;
+  if (!email) {
+    // unprocessable entity
+    return res.status(422).send({
+      error: "Something unforunate has happened."
+    });
+  }
+
+  User.findOne({ email: email }, (err, existingUser) => {
+    if (err) next(err);
+
+    if (existingUser) {
+      cb({ token: existingUser.access });
+    }
+
+    const user = new User(userdata);
+
+    user.save(err => {
+      if (err) next(err);
+    });
+
+    cb({ token: tokenForUser(user) });
+  });
+};
