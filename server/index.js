@@ -69,6 +69,7 @@ app.get("/ga/cb", (req, res) => {
 app.post("/ga/user", async (req, res) => {
   let token = req.body.token;
   const user = await decodeUser(token);
+  console.log(user);
   res.json(user);
 });
 

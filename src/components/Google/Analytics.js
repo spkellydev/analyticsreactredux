@@ -56,7 +56,6 @@ class Analytics extends Component {
     }
   }
 
-  // TODO: add more dimsets
   componentWillReceiveProps(nextProps) {
     this.chartData = { labels: [], datasets: [] };
     try {
@@ -67,7 +66,6 @@ class Analytics extends Component {
         });
       }
       if (nextProps.google.analytics) {
-        console.log(nextProps.google.analytics);
         const ga = nextProps.google.analytics;
         const metrics = ga.rows[0];
 
@@ -160,6 +158,7 @@ class Analytics extends Component {
         <section className="container-fluid">
           <div className="row">
             <div className="col-3">
+              <h3>Available Dimensions: Date</h3>
               <form onSubmit={this.onSubmit}>
                 <select
                   onChange={this.handleDropdownChange}
